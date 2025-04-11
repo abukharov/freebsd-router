@@ -1,0 +1,18 @@
+---
+version: '3'
+tasks:
+  default:
+    cmds:
+      - task: run-ansible
+
+  run-ansible:
+    desc: Run Ansible playbook
+    cmds:
+      - |
+        docker run --rm \
+          -v $HOME/.ssh/known_hosts:/root/.ssh/known_hosts \
+          -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
+          -v $(pwd):/src \
+          -w /src \
+          alpine/ansible:latest \
+          sh -c "chmod 600 /root/.ssh/id_rsa; ansible-playbook -i inventory/dev main.yaml"

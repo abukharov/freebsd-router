@@ -1,0 +1,8 @@
+---
+main_trunk:
+  members:
+    - vtnet0
+    - vtnet1
+
+internet:
+  interface: vtnet3

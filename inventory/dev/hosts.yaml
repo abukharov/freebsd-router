@@ -1,0 +1,5 @@
+---
+routers:
+  hosts:
+    selena.cosmi.co.in:
+      ansible_user: ansible

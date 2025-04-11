@@ -1,0 +1,5 @@
+---
+- name: "Install doas"
+  community.general.pkgng:
+    name: doas
+    state: present

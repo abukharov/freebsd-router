@@ -1,0 +1,6 @@
+---
+- name: "Create portgroup"
+  ansible.builtin.debug:
+    msg: "Creating portgroup {{ item }}"
+  loop: "{{ main_trunk.members }}"
+  when: main_trunk.members is defined
