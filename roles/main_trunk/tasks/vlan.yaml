@@ -1,0 +1,23 @@
+---
+- name: Create VLAN {{ vlan_dict.name }}
+  community.general.sysrc:
+    name: "vlans_{{ main_trunk.interface }}"
+    value: "{{ vlan_dict.name }}"
+    state: value_present
+  notify:
+    - "restart network"
+
+- name: Set VLAN {{ vlan_dict.name }} tag {{ vlan_dict.id }}
+  community.general.sysrc:
+    name: "create_args_{{ vlan_dict.name }}"
+    value: "vlan {{ vlan_dict.id }}"
+  notify:
+    - "restart network"
+
+- name: Set IP address for VLAN {{ vlan_dict.name }}
+  community.general.sysrc:
+    name: "ifconfig_{{ vlan_dict.name }}"
+    value: "{{ vlan_dict.ip_address }}"
+  when: vlan_dict.ip_address is defined
+  notify:
+    - "restart network"

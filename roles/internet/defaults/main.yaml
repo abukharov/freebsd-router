@@ -1,9 +1,4 @@
 ---
-main_trunk:
-  members:
-    - em0
-    - em1
-
 internet:
   interface: hn0
   ip_address: DHCP

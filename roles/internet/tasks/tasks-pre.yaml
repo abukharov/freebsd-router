@@ -1,0 +1,10 @@
+---
+- name: "Install dhcpcd"
+  ansible.builtin.package:
+    name: dhcpcd
+    state: present
+
+- name: "Enable dhcpcd"
+  community.general.sysrc:
+    name: dhclient_program
+    value: /usr/local/sbin/dhcpcd

@@ -13,6 +13,12 @@
   become: true
   become_method: doas
   roles:
+    - role: internet
+      tags:
+        - internet
+    - role: nat
+      tags:
+        - nat
     - role: main_trunk
       tags:
         - main_trunk

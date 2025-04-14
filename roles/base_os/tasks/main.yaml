@@ -1,5 +1,12 @@
 ---
-- name: "Install doas"
+- name: "Install prerequisites"
   community.general.pkgng:
-    name: doas
+    name:
+      - doas
+      - python
     state: present
+
+- name: "Generate rc.conf"
+  ansible.builtin.template:
+    src: "rc.conf.j2"
+    dest: "/etc/rc.conf"

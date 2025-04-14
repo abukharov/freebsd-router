@@ -1,6 +1,30 @@
 ---
-- name: "Create portgroup"
-  ansible.builtin.debug:
-    msg: "Creating portgroup {{ item }}"
+- name: "Bring up the interfaces"
+  community.general.sysrc:
+    name: "ifconfig_{{ item }}"
+    value: "up"
   loop: "{{ main_trunk.members }}"
-  when: main_trunk.members is defined
+  notify:
+    - "restart network"
+
+- name: "Configure link aggregation - cloned interface"
+  community.general.sysrc:
+    name: "cloned_interfaces"
+    value: "{{ main_trunk.interface }}"
+  notify:
+    - "restart network"
+
+- name: "Configure link aggregation - setup {{ main_trunk.interface }}"
+  community.general.sysrc:
+    name: "ifconfig_{{ main_trunk.interface }}"
+    value: "create laggproto lacp laggport {{ main_trunk.members | join(' laggport ') }}"
+  notify:
+    - "restart network"
+
+- include_tasks: vlan.yaml
+  loop: "{{ main_trunk.vlans }}"
+  loop_control:
+    loop_var: vlan_dict
+
+- name: Flush handlers
+  meta: flush_handlers

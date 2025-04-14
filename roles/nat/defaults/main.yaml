@@ -1,0 +1,4 @@
+---
+internet:
+  interface: hn0
+  ip_address: DHCP
