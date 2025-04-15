@@ -1,0 +1,20 @@
+---
+- name: "Enable pf"
+  community.general.sysrc:
+    name: "pf_enable"
+    value: "YES"
+
+- name: "Enable pflog"
+  community.general.sysrc:
+    name: "pflog_enable"
+    value: "YES"
+
+- name: "Generate pf config"
+  ansible.builtin.template:
+    src: pf.conf.j2
+    dest: /etc/pf.conf
+  notify:
+    - "restart pf"
+
+- name: Flush handlers
+  meta: flush_handlers

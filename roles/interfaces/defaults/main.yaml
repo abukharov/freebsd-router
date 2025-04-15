@@ -3,8 +3,12 @@ main_trunk:
   members:
     - em0
     - em1
+  vlans:
+    - name: vlan0
+      id: 2
+      ip_address: 10.0.1.0/24
 
 internet:
-  interface: hn0
+  interface: em3
   ip_address: DHCP
   ipv6_address: DHCP

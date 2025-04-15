@@ -1,6 +1,8 @@
 ---
 routers:
   hosts:
-    selena.cosmi.co.in:
+    pella.cosmi.co.in:
+      ansible_host: 172.16.3.21
+      ansible_port: 5222
       ansible_user: ansible
       ansible_ssh_private_key_file: /root/.ssh/ansible_key

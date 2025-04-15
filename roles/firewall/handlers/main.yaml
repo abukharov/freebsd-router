@@ -1,0 +1,5 @@
+---
+- name: Restart pf
+  ansible.builtin.command:
+    cmd: service pf restart
+  listen: "restart pf"

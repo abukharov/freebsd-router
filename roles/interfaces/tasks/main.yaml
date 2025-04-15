@@ -1,5 +1,14 @@
 ---
-- name: "Bring up the interfaces"
+- include_tasks: "tasks-pre.yaml"
+
+- name: "Setup WAN interface"
+  community.general.sysrc:
+    name: "ifconfig_{{ internet.interface }}"
+    value: "up"
+  notify:
+    - "restart network"
+
+- name: "Bring up the aggregation interfaces"
   community.general.sysrc:
     name: "ifconfig_{{ item }}"
     value: "up"
@@ -11,6 +20,7 @@
   community.general.sysrc:
     name: "cloned_interfaces"
     value: "{{ main_trunk.interface }}"
+    state: value_present
   notify:
     - "restart network"
 
@@ -25,6 +35,13 @@
   loop: "{{ main_trunk.vlans }}"
   loop_control:
     loop_var: vlan_dict
+
+- name: "Configure dhcpcd"
+  ansible.builtin.template:
+    src: dhcpcd.conf.j2
+    dest: /usr/local/etc/dhcpcd.conf
+  notify:
+    - "restart network"
 
 - name: Flush handlers
   meta: flush_handlers

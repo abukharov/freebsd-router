@@ -1,0 +1,13 @@
+set skip on lo0
+
+# Set up nat for all vlans
+{% for vlan in main_trunk.vlans %}
+nat on {{ internet.interface }} from {{ vlan.name }}:network -> {{ internet.interface }}
+{% endfor %}
+
+# Filter rules
+block in all
+
+
+
+pass out on {{ internet.interface }} all keep state
